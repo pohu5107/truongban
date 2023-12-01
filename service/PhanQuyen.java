@@ -53,7 +53,6 @@ public class PhanQuyen implements PhanQuyenNV {
                 HeThong.connect(6);
             }
                 break;
-                
             default: {
                 return;
             }

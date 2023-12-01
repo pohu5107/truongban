@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Scanner;
 
 import core.HeThong;
+import model.QTFunction;
+import model.TaiKhoan;
 
 public class NguoiQuanTri {
     public static void menu() {
@@ -70,6 +72,8 @@ public class NguoiQuanTri {
                 HashMap<String, String> listAcount = HeThong.getDATA(select);
                 System.out.println("----------------------------------");
                 System.out.println("chuc nang:  tim kiem");
+                QTFunction method = new QTFunction();
+                method.findAcount(listAcount);
                 do {
                     System.out.println("---------------------------------");
                     System.out.println("nhap 0 de thoat");
@@ -206,9 +210,14 @@ public class NguoiQuanTri {
                     chucNang();
                     return;
                 }
+                TaiKhoan user = new TaiKhoan();
+                user.setQuyen(select);
                 HashMap<String, String> listAcount = HeThong.getDATA(select);
                 System.out.println("----------------------------------");
                 System.out.println("chuc nang: sua tai khoan");
+                QTFunction method = new QTFunction();
+                method.setAcount(user, listAcount);
+                HeThong.setDATA(select, listAcount);
                 do {
                     System.out.println("---------------------------------");
                     System.out.println("nhap 0 de thoat");

@@ -19,7 +19,6 @@ public class User {
     public void login() {
 
         int selector = 10;
-        System.out.println(HeThong.state);
         if (selector == 0) {
             HeThong.state = 0;
             System.out.println("thoat");
@@ -79,6 +78,7 @@ public class User {
                 checkuser = true;
                 break;
             }
+
         }
         if (checkuser) {
             if (userAcount.getPass().equalsIgnoreCase(listAcount.get(key))) {
