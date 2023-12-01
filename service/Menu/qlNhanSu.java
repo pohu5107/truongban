@@ -1,9 +1,10 @@
 package service.Menu;
 
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
-
 import core.HeThong;
+import model.NhanVien;
 
 public class qlNhanSu {
     public static void menuHopDong() {
@@ -77,15 +78,14 @@ public class qlNhanSu {
                 return;
             }
             if (option < 0 && option > 5) {
-                System.out.println("loi lua chon vui long nhap lai");
+                System.out.println("loi  lua chon vui long nhap lai");
             }
         } while (option < 0 && option > 5);
-
         switch (option) {
             case 1: {
                 int select = 0;
                 menuHopDong();
-                System.out.print("nhan  lua chon: ");
+                System.out.print("nhan  lua chon:");
                 select = inputs.nextInt();
                 if (select == 6) {
                     ChucNang();
@@ -98,7 +98,6 @@ public class qlNhanSu {
                     HeThong.state = 9;
                     return;
                 }
-                
                 switch (select) {
                     case 1: {
                         System.out.println("----------------------------------");
@@ -132,7 +131,7 @@ public class qlNhanSu {
                     System.out.println("---------------------------------");
                     System.out.println("nhap 0 de thoat");
                     System.out.println("nhap 6 de tro lai chuc nang quan ly nhan su");
-                    System.out.print("nhan lua chon: ");
+                    System.out.print("nhan lua chon:");
                     select = inputs.nextInt();
                     if (select != 0 && select != 6) {
                         System.out.println("---------------------------------");
@@ -152,7 +151,7 @@ public class qlNhanSu {
             case 2: {
                 int select = 0;
                 menuPhongBan();
-                System.out.print("nhan lua chon:");
+                System.out.print("nhan  lua chon:");
                 select = inputs.nextInt();
                 if (select == 6) {
                     ChucNang();
@@ -198,7 +197,7 @@ public class qlNhanSu {
                     System.out.println("---------------------------------");
                     System.out.println("nhap 0 de thoat");
                     System.out.println("nhap 6 de tro lai chuc nang quan ly nhan su");
-                    System.out.print("nhan lua chon: ");
+                    System.out.print("nhan lua chon:");
                     select = inputs.nextInt();
                     if (select != 0 && select != 6) {
                         System.out.println("---------------------------------");
@@ -255,6 +254,10 @@ public class qlNhanSu {
                     case 5: {
                         System.out.println("----------------------------------");
                         System.out.println("chuc nang:   danh sach nhan vien");
+                        List<NhanVien> list = HeThong.getList(1);
+                        for (NhanVien person : list) {
+                            System.out.println(person);
+                        }
                     }
                         break;
                     default:
@@ -264,7 +267,7 @@ public class qlNhanSu {
                     System.out.println("---------------------------------");
                     System.out.println("nhap 0 de thoat");
                     System.out.println("nhap 6 de tro lai chuc nang quan ly nhan su");
-                    System.out.print("nhan lua chon: ");
+                    System.out.print("nhan lua chon:");
                     select = inputs.nextInt();
                     if (select != 0 && select != 6) {
                         System.out.println("---------------------------------");
@@ -330,7 +333,7 @@ public class qlNhanSu {
                     System.out.println("---------------------------------");
                     System.out.println("nhap 0 de thoat");
                     System.out.println("nhap 6 de tro lai chuc nang quan ly nhan su");
-                    System.out.print("nhan lua chon: ");
+                    System.out.print("nhan lua chon:");
                     select = inputs.nextInt();
                     if (select != 0 && select != 6) {
                         System.out.println("---------------------------------");

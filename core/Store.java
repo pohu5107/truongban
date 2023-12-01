@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import model.NhanVien;
+
 public class Store {
 
     public static HashMap<String, String> DATA_AC_NV = new HashMap<>();
@@ -12,8 +14,10 @@ public class Store {
     public static HashMap<String, String> DATA_AC_TC = new HashMap<>();
     public static HashMap<String, String> DATA_AC_NL = new HashMap<>();
     public static HashMap<String, String> DATA_AC_TB = new HashMap<>();
-    public static HashMap<String, String> UNDEFINE = new HashMap<>();
-    public static List<String> listNhanVien = new ArrayList<>();
+    public static HashMap<String, String> UNDEFINE_H = new HashMap<>();
+    public static List<NhanVien> listNhanVien = new ArrayList<>();
+    public static List<NhanVien> listinfor = new ArrayList<>();
+    public static List<NhanVien> UNDEFINE_L = new ArrayList<>();
 
     public Store() {
         Connection.State request = new Connection.State();
@@ -33,19 +37,19 @@ public class Store {
                 DATA_AC_TB.put(value[1], value[2]);
             }
         }
-        List<String[]> response_nhanvien = request.getData(Connection.State.path_data_QuanTri);
-        
-        List<String[]> response_truongban = request.getData(Connection.State.path_data_QuanTri);
-
+        List<String[]> response_nhanvien = request.getData(Connection.State.path_data_NhanVien);
 
         for (String[] value : response_nhanvien) {
-
+            NhanVien newNhanVien = new NhanVien(value[0], value[1], value[2], value[3], value[4], value[5], value[6],
+                    value[7]);
+            listNhanVien.add(newNhanVien);
         }
-
-        for(String[] value : response_truongban){
-
+        List<String[]> response_inforNV = request.getData(Connection.State.path_data_inforNV);
+        for (String[] value : response_inforNV) {
+            NhanVien newNhanVien = new NhanVien(value[0], value[1], value[2], value[3], value[4], value[5], value[6],
+                    value[7], value[8], value[9], value[10], value[11], value[12], value[13], value[14], value[15]);
+            listinfor.add(newNhanVien);
         }
-        
     }
 
 }

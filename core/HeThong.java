@@ -1,20 +1,25 @@
 package core;
 
+import java.net.Socket;
 import java.util.HashMap;
 import java.util.List;
 
+import model.NhanVien;
 import service.PhanQuyen;
 import service.User;
 import service.Menu.NguoiQuanTri;
+import service.Menu.TruongBan;
 import service.Menu.qlNhanLuc;
 import service.Menu.qlNhanSu;
 import service.Menu.qlTaiChinh;
-import service.Menu.TruongBan;
 
 public class HeThong {
     public static Integer state = 10;
 
     public static void heThong() {
+        if (state == 10) {
+            Store init = new Store();
+        }
         if (state == 0) {
             return;
         }
@@ -26,7 +31,7 @@ public class HeThong {
     }
 
     public static HashMap<String, String> getDATA(int selector) {
-        Store init = new Store();
+
         if (selector == 1) {
             return Store.DATA_AC_NV;
         }
@@ -45,15 +50,39 @@ public class HeThong {
         if (selector == 6) {
             return Store.DATA_AC_TB;
         }
-        return Store.UNDEFINE;
+        return Store.UNDEFINE_H;
     }
 
-    public static List<String> getList(int selector) {
-        return Store.listNhanVien;
+    public static void setDATA(int selector, HashMap<String, String> newDATA) {
+        if (selector == 1) {
+            Store.DATA_AC_NV = newDATA;
+        }
+        if (selector == 2) {
+            Store.DATA_AC_QT = newDATA;
+        }
+        if (selector == 3) {
+            Store.DATA_AC_NS = newDATA;
+        }
+        if (selector == 4) {
+            Store.DATA_AC_NL = newDATA;
+        }
+        if (selector == 5) {
+            Store.DATA_AC_TC = newDATA;
+        }
+        if (selector == 6) {
+            Store.DATA_AC_TB = newDATA;
+        }
+
     }
 
-    public static void setDATA() {
-
+    public static List<NhanVien> getList(int selector) {
+        if (selector == 1) {
+            return Store.listNhanVien;
+        }
+        if (selector == 2) {
+            return Store.listinfor;
+        }
+        return Store.UNDEFINE_L;
     }
 
     public static void connect(int selector) {
@@ -95,7 +124,7 @@ public class HeThong {
                 }
                 return;
             }
-            case 6:{ // phu dang lam
+            case 6: { // phu dang lam
                 TruongBan.ChucNang();
                 if (state == 9) {
                     heThong();

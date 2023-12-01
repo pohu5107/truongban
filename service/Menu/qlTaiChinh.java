@@ -1,8 +1,9 @@
 package service.Menu;
- 
+
 import java.util.Scanner;
 import java.util.List;
 import core.HeThong;
+import model.NhanVien;
 
 public class qlTaiChinh {
     public static void menu() {
@@ -68,7 +69,7 @@ public class qlTaiChinh {
                     ChucNang();
                     return;
                 }
-                List<String> DataList = HeThong.getList(select);
+                List<NhanVien> DataList = HeThong.getList(1);
                 System.out.println("-----------------------");
                 System.out.println("chuc nang:tim kiem");
                 do {
@@ -116,7 +117,7 @@ public class qlTaiChinh {
                     ChucNang();
                     return;
                 }
-                List<String> DataList = HeThong.getList(select);
+                List<NhanVien> DataList = HeThong.getList(1);
                 System.out.println("-----------------------");
                 System.out.println("chuc nang:them muc luong");
                 do {
@@ -164,7 +165,7 @@ public class qlTaiChinh {
                     ChucNang();
                     return;
                 }
-                List<String> DataList = HeThong.getList(select);
+                List<NhanVien> DataList = HeThong.getList(1);
                 System.out.println("-----------------------");
                 System.out.println("chuc nang:sua muc luong");
                 do {
@@ -212,7 +213,7 @@ public class qlTaiChinh {
                     ChucNang();
                     return;
                 }
-                List<String> DataList = HeThong.getList(select);
+                List<NhanVien> DataList = HeThong.getList(1);
                 System.out.println("-----------------------");
                 System.out.println("chuc nang:xoa muc luong");
                 do {
@@ -260,7 +261,7 @@ public class qlTaiChinh {
                     ChucNang();
                     return;
                 }
-                List<String> DataList = HeThong.getList(select);
+                List<NhanVien> DataList = HeThong.getList(1);
                 System.out.println("-----------------------");
                 System.out.println("chuc nang:in danh sach");
                 do {
@@ -308,7 +309,7 @@ public class qlTaiChinh {
                     ChucNang();
                     return;
                 }
-                List<String> DataList = HeThong.getList(select);
+                List<NhanVien> DataList = HeThong.getList(1);
                 System.out.println("-----------------------");
                 System.out.println("chuc nang:tinh luong");
                 do {
