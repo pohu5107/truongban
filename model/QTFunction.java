@@ -31,8 +31,23 @@ public class QTFunction extends AbQTFunction {
          return;
       }
       data.remove(user.getUserName());
-      System.out.println("---------------------------");
-      System.out.println("nhap ten tai khoan moi:");
+      int select = 0;
+      do {
+         System.out.println("--------tuy chon sua------");
+         System.out.println("1 su email nguoi dung");
+         System.out.println("2.su mat khau nguoi dung");
+         System.out.println("3.thoat");
+         System.out.print("nhap tuy chon:");
+         select = inputs.nextInt();
+         if (select == 3) {
+            System.out.println("---------------------------");
+            System.out.println("thoat");
+            System.out.println("----------------------------");
+         }
+         if (select < 1 || select > 2) {
+            System.out.println("tuy chon khong chinh sac vui long nhap lai");
+         }
+      } while (select < 1 || select > 2);
       user.setUserName(inputs.nextLine());
       data.put(user.getUserName(), user.getPass());
    }

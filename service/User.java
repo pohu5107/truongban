@@ -5,16 +5,10 @@ import java.util.Scanner;
 
 import core.HeThong;
 import model.TaiKhoan;
+import model.checkError;
 
 public class User {
     public static TaiKhoan userAcount = new TaiKhoan();
-
-    public static boolean checkEmail(String email) {
-        String ePattern = "^[(a-zA-Z-0-9-\\_\\+\\.)]+@[(a-z-A-z)]+\\.[(a-zA-z)]{2,3}$";
-        java.util.regex.Pattern p = java.util.regex.Pattern.compile(ePattern);
-        java.util.regex.Matcher m = p.matcher(email);
-        return m.matches();
-    }
 
     public void login() {
 
@@ -50,21 +44,30 @@ public class User {
             }
         } while (selector < 0 || selector > 6);
         HashMap<String, String> listAcount = HeThong.getDATA(selector);
+        checkError check = new checkError();
         System.out.println("-----------------------------------");
         inputs.nextLine();
-        String userName;
+        String userName = "";
         do {
             System.out.print("Nhan email nguoi dung:");
             userName = inputs.nextLine();
-            if (!checkEmail(userName)) {
-                System.out.println("----------------------------------------------");
-                System.out.println("dinh dang email khong dung hay nhap lai email!");
-                System.out.println("----------------------------------------------");
-            }
-        } while (!checkEmail(userName));
+            if (check.nullInput(userName)) {
+                System.out.println("ten nguoi dung khong duoc de trong");
 
-        System.out.print("nhap mat khau:");
-        String userPass = inputs.nextLine();
+            }
+
+        } while (check.nullInput(userName));
+        String userPass = "";
+
+        do {
+            System.out.print("nhap mat khau:");
+            userPass = inputs.nextLine();
+
+            if (check.nullInput(userPass)) {
+                System.out.println("mat khau nguoi dung khong duoc de trong");
+
+            }
+        } while (check.nullInput(userPass));
         userAcount = new TaiKhoan(userName, userPass, selector);
 
         System.out.println("----------------------------------------------");
