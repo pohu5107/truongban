@@ -40,15 +40,15 @@ public class Store {
         List<String[]> response_nhanvien = request.getData(Connection.State.path_data_NhanVien);
 
         for (String[] value : response_nhanvien) {
-            NhanVien newNhanVien = new NhanVien(value[0], value[1], value[2], value[3], value[4], value[5], value[6],
-                    value[7]);
-            listNhanVien.add(newNhanVien);
+            // NhanVien newNhanVien = new NhanVien(value[0], value[1], value[2], value[3], value[4], value[5], value[6],
+            // //         value[7]);
+            // listNhanVien.add(newNhanVien);
         }
         List<String[]> response_inforNV = request.getData(Connection.State.path_data_inforNV);
         for (String[] value : response_inforNV) {
-            NhanVien newNhanVien = new NhanVien(value[0], value[1], value[2], value[3], value[4], value[5], value[6],
-                    value[7], value[8], value[9], value[10], value[11], value[12], value[13], value[14], value[15]);
-            listinfor.add(newNhanVien);
+        //     NhanVien newNhanVien = new NhanVien(value[0], value[1], value[2], value[3], value[4], value[5], value[6],
+        //             value[7], value[8], value[9], value[10], value[11], value[12], value[13], value[14], value[15]);
+        //     listinfor.add(newNhanVien);
         }
     }
 

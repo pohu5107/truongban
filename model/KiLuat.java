@@ -8,13 +8,25 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.io.RandomAccessFile;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
+
+interface ArraysInterface { 
+    void TimKiemThongTin();
+
+    void ThemThongTin();
+
+    void ChinhSuaThongTin();
+        
+    void XoaThongTin();
+        
+    void InDanhSach();
+}
 
 public class KiLuat implements ArraysInterface {
     String filePath = "Data\\TruongBan_data\\QuanLy.csv";
+    ArrayList <String> list = new ArrayList<>();
+    checkError check = new checkError();
 
     @Override // them thong tin nhan vien ki luat
     public void ThemThongTin() {
@@ -27,20 +39,52 @@ public class KiLuat implements ArraysInterface {
         String maPhong = scanner.nextLine();
         System.out.print("Nhap chuc vu: ");
         String chucVu = scanner.nextLine();
-        System.out.print("Nhap ngay dang ky: ");
-        String ngayDangKy = scanner.nextLine();
-        System.out.print("Nhap ngay het han: ");
-        String ngayHetHan = scanner.nextLine();
+        String ngayDangKy;
+        do {
+            System.out.print("Nhap ngay dang ky (dd/mm/yyyy): ");
+            ngayDangKy = scanner.nextLine();
+        } while (!check.dateFormat(ngayDangKy));
+        String ngayHetHan;
+        do {
+            System.out.print("Nhap ngay het han (dd/mm/yyyy): ");
+            ngayHetHan = scanner.nextLine();
+        } while (!check.dateFormat(ngayHetHan));
+        String luongKhenThuong = "0";
         System.out.print("Nhap luong ki luat: ");
         String luongKiLuat = scanner.nextLine();
-
-        try (FileWriter fileWriter = new FileWriter(filePath, true);
-                BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-                PrintWriter printWriter = new PrintWriter(bufferedWriter)) {
-            // printWriter.println();
-            printWriter.println(hoTen + "," + maBoPhan + "," + maPhong + "," + chucVu + "," + ngayDangKy + ","
-                    + ngayHetHan + "," + luongKiLuat);
-
+        boolean nhanVienDaTonTai = false;
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] data = line.split(",");
+                String currentHoTen = data[0].trim();
+                String currentMaBoPhan = data[1].trim();
+                String currentMaPhong = data[2].trim();
+                if (currentHoTen.equals(hoTen) && 
+                    currentMaBoPhan.equals(maBoPhan) && 
+                    currentMaPhong.equals(maPhong)) {
+                        nhanVienDaTonTai = true;
+                        System.out.println("Nhan vien da ton tai trong file. Thong tin se duoc cap nhat.");
+                        line = hoTen + "," + maBoPhan + "," + maPhong + "," + chucVu + ","
+                         + ngayDangKy + "," + ngayHetHan + "," + luongKhenThuong + "," + luongKiLuat;
+                }
+                list.add(line);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        if (!nhanVienDaTonTai) {
+            String newEntry = hoTen + "," + maBoPhan + "," + maPhong + "," + chucVu + ","
+            + ngayDangKy + "," + ngayHetHan + "," + luongKhenThuong + "," + luongKiLuat;
+            list.add(newEntry);
+        }
+        // ghi lại thong tin vao file
+        try (FileWriter fileWriter = new FileWriter(filePath);
+             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+             PrintWriter printWriter = new PrintWriter(bufferedWriter)) {
+            for (String line : list) {
+                printWriter.println(line);
+            }
             System.out.println("Nhan vien da duoc them vao file.");
         } catch (IOException e) {
             e.printStackTrace();
@@ -58,26 +102,23 @@ public class KiLuat implements ArraysInterface {
         String maPhongToDelete = scanner.nextLine();
 
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
-            List<String> lines = new ArrayList<>();
             String line;
-
             while ((line = reader.readLine()) != null) {
                 String[] data = line.split(",");
                 String currentHoTen = data[0].trim();
                 String currentMaBoPhan = data[1].trim();
                 String currentMaPhong = data[2].trim();
-
                 // Kiểm tra xem có phải nhân viên cần xóa không
                 if (currentHoTen.equals(hoTenToDelete) &&
                         currentMaBoPhan.equals(maBoPhanToDelete) &&
                         currentMaPhong.equals(maPhongToDelete)) {
                     continue; // Bỏ qua dòng dữ liệu cần xóa
                 }
-                lines.add(line);
+                list.add(line);
             }
-            if (lines.size() > 0) {
+            if (list.size() > 0) {
                 try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
-                    for (String data : lines) {
+                    for (String data : list) {
                         writer.write(data);
                         writer.newLine();
                     }
@@ -98,15 +139,12 @@ public class KiLuat implements ArraysInterface {
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line;
             System.out.printf("%-30s%-15s%-15s%-15s\n", "Ho Ten", "Ma Bo Phan", "Ma Phong", "Luong Ki Luat");
-            // Bỏ qua dòng đầu tiên (ghi chú)
             reader.readLine();
             while ((line = reader.readLine()) != null) {
-                // kiểm tra và bỏ qua dòng trống
                 if (line.trim().isEmpty()) {
                     continue;
                 }
                 String[] data = line.split(",");
-                // Kiểm tra nếu nhân viên có lương khen thưởng
                 if (data.length >= 7 && !data[7].trim().isEmpty()) {
                     String hoTen = data[0].trim();
                     String maBoPhan = data[1].trim();
@@ -125,53 +163,59 @@ public class KiLuat implements ArraysInterface {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Nhap ten nhan vien can chinh sua: ");
         String hoTenToEdit = scanner.nextLine();
-        // scanner.nextLine();
-        System.out.print("Nhap thong tin moi:");
-        System.out.print("Ho ten: ");
-        String newHoTen = scanner.nextLine();
-        System.out.print("Ma bo phan: ");
-        String newMaBoPhan = scanner.nextLine();
-        System.out.print("Ma phong: ");
-        String newMaPhong = scanner.nextLine();
-        System.out.print("Chuc vu: ");
-        String newChucVu = scanner.nextLine();
-        System.out.print("Ngay dang ky: ");
-        String newNgayDangKy = scanner.nextLine();
-        System.out.print("Ngay het han: ");
-        String newNgayHetHan = scanner.nextLine();
-        System.out.print("Luong ky luat: ");
-        String newLuongKiLuat = scanner.nextLine();
-        String filePath = "Data\\TruongBan_data\\QuanLy.csv";
-        try (RandomAccessFile file = new RandomAccessFile(filePath, "rw")) {
-            long currentPosition = 0;
-            boolean found = false;
-
-            while (file.getFilePointer() < file.length()) {
-                String line = file.readLine();
-                String[] data = line.split(",");
-                String currentHoTen = data[0].trim();
-
-                if (currentHoTen.equals(hoTenToEdit)) { // kiem tra nhan vien can chinh sua
-                    found = true;
-                    break;
-                }
-                currentPosition = file.getFilePointer();
-
-                if (file.getFilePointer() >= file.length()) {
-                    break;
-                }
-            }
-            // tim thay , di chuyen den vi tri can chỉnh sua
-            if (found) {
-                file.seek(currentPosition);
-                file.writeBytes(newHoTen + "," + newMaBoPhan + "," + newMaPhong + "," + newChucVu + ","
-                        + newNgayDangKy + "," + newNgayHetHan + "," + newLuongKiLuat + "\n");
-                System.out.println("Thong tin nhan vien da duoc chinh sua.");
-            } else {
-                System.out.println("Khong tim thay nhan vien can chinh sua.");
+         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                list.add(line);
             }
         } catch (IOException e) {
             e.printStackTrace();
+        }
+        boolean found = false;
+        for (int i = 0; i < list.size(); i++) {
+            String[] data = list.get(i).split(",");
+            String currentHoTen = data[0].trim();
+            if (currentHoTen.equals(hoTenToEdit)) {
+                System.out.print("Nhap thong tin moi:\nHo ten: ");
+                String newHoTen = scanner.nextLine();
+                System.out.print("Ma bo phan: ");
+                String newMaBoPhan = scanner.nextLine();
+                System.out.print("Ma phong: ");
+                String newMaPhong = scanner.nextLine();
+                System.out.print("Chuc vu: ");
+                String newChucVu = scanner.nextLine();
+                String newNgayDangKy;
+                do {
+                    System.out.print("Nhap ngay dang ky (dd/mm/yyyy): ");
+                    newNgayDangKy = scanner.nextLine();
+                } while (!check.dateFormat(newNgayDangKy));
+                String newNgayHetHan;
+                do {
+                    System.out.print("Nhap ngay het han (dd/mm/yyyy): ");
+                    newNgayHetHan = scanner.nextLine();
+                } while (!check.dateFormat(newNgayHetHan));
+                String newLuongKhenThuong = data[6].trim();//luu lai thong tin luong khen thuong ko chinh sua
+                System.out.print("Luong ki luat: ");
+                String newLuongKiLuat = scanner.nextLine();
+                list.set(i, newHoTen + "," + newMaBoPhan + "," + newMaPhong + "," + newChucVu + ","
+                        + newNgayDangKy + "," + newNgayHetHan + "," + newLuongKhenThuong + "," + newLuongKiLuat);
+                found = true;
+                break;
+            }
+        }
+        try (FileWriter fileWriter = new FileWriter(filePath);
+            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+            PrintWriter printWriter = new PrintWriter(bufferedWriter)) {
+           for (String line : list) {
+               printWriter.println(line);
+           }
+           if (found) {
+               System.out.println("Thong tin nhan vien da duoc chinh sua.");
+           } else {
+               System.out.println("Khong tim thay nhan vien can chinh sua.");
+           }
+        } catch (IOException e) {
+           e.printStackTrace();
         }
     }
 
@@ -179,54 +223,45 @@ public class KiLuat implements ArraysInterface {
     public void TimKiemThongTin() {
         Scanner scanner = new Scanner(System.in);
         System.out.println(
-                "Nhap thong tin can tim ( ho ten/ ma bo phan/ ma phong/ ngay ky(dd-mm-yyyy)/ ngay het han(dd-mm-yyyy) ): ");
+                "Nhap thong tin can tim ( ho ten/ ma bo phan/ ma phong ): ");
         String timkiem = scanner.nextLine();
         try {
-            // Đọc dữ liệu từ file và thực hiện tìm kiếm khen thưởng
             readDataFromFileAndSearch(timkiem);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void readDataFromFileAndSearch(String timkiem) throws FileNotFoundException {
-        // Đường dẫn tới file CSV
-        String filePath = "Data\\TruongBan_data\\QuanLy.csv";
-        // Sử dụng Scanner để đọc dữ liệu từ file
-        try (Scanner scanner = new Scanner(new File(filePath))) {
-            // Bỏ qua dòng tiêu đề
-            if (scanner.hasNextLine()) {
-                scanner.nextLine();
+            } catch (FileNotFoundException e) {
+               e.printStackTrace();
             }
-            System.out.println("Result:");
-            while (scanner.hasNextLine()) {
-                String line = scanner.nextLine();
-                String[] data = line.split(",");
-
-                String hoten = data[0];
-                String mabophan = data[1];
-                String maphong = data[2];
-                String chucvu = data[3];
-                String ngayky = data[4];
-                String ngayhethan = data[5];
-                String luongkiluat = data[7];
-
-                if (hoten.contains(timkiem)
-                        || mabophan.equals(timkiem)
-                        || maphong.equals(timkiem)
-                        || chucvu.equals(timkiem)
-                        || ngayky.equals(timkiem)
-                        || ngayhethan.equals(timkiem)) {
-
-                    System.out.println("Ho ten: " + hoten);
-                    System.out.println("Chuc vu: " + chucvu);
-                    System.out.println("Luong ki luat: " + luongkiluat);
-                    System.out.println("------------------------");
-                } else {
+        }
+        private void readDataFromFileAndSearch(String timkiem) throws FileNotFoundException {
+            try (Scanner scanner = new Scanner(new File(filePath))) {
+                if (scanner.hasNextLine()) {
+                    scanner.nextLine();
+                }
+                System.out.println("Result:");
+                boolean found = false; 
+                while (scanner.hasNextLine()) {
+                    String line = scanner.nextLine();
+                    String[] data = line.split(",");
+                    String hoten = data[0];
+                    String mabophan = data[1];
+                    String maphong = data[2];
+                    String chucvu = data[3];
+                    String luongkiluat = data[7];
+                    if (hoten.contains(timkiem)// tim kiem theo tieu chi
+                            || mabophan.equals(timkiem)
+                            || maphong.equals(timkiem)
+                            || chucvu.equals(timkiem) ) {
+                        System.out.println("Ho ten: " + hoten);
+                        System.out.println("Chuc vu: " + chucvu);
+                        System.out.println("Luong ki luat: " + luongkiluat);
+                        System.out.println("------------------------");
+                        found = true ;
+                        break;
+                    } 
+                }
+                if(!found) { 
                     System.out.println("khong co thong tin can tim");
                 }
             }
         }
-    }
 
 }

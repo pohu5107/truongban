@@ -9,6 +9,7 @@ interface check {
 }
 
 public class checkError implements check {
+
     @Override
     public boolean checkEmail(String email) {
         String ePattern = "^[(a-zA-Z-0-9-\\_\\+\\.)]+@[(a-z-A-z)]+\\.[(a-zA-z)]{2,3}$";

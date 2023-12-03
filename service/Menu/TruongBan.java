@@ -4,6 +4,7 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import core.HeThong;
+import model.BaoCao;
 import model.KhenThuong;
 import model.KiLuat;
 public class TruongBan { 

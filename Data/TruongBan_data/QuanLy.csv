@@ -1,8 +1,10 @@
 ho ten,ma bo phan,ma phong,chuc vu, ngay ky,ngay het han,luong khen thuong,luong ki luat
-nguyen van a,bp001,p0001,nhan vien,10-2-2022,20-2-2025,200000,200000
-nguyen van b,bp002,p0002,nhan vien,11-2-2022,22-2-2025,190000,150000
-le thi c,bp003,p0003,quan ly,3-2-2019,10-2-2026,0,0
-vo van d,bp012,p0000,quan ly,12-8-2018,10-10-2030,0,0
-le thi a,bp014,p0005,nhan vien,14-12-2020,10-10-2025,0,0
-vu anh tuan,bp019,p0002,nhan vien,13-10-2020,19-2-2025,0,0
-le thien luu,bp104,p0005,nhan vien,2-11-2020,20-3-2025,0,0
+nguyen van a,bp001,p0001,nhan vien,10/02/2020,10/02/2025,100000,0
+nguyen van b,bp002,p0002,nhan vien,11/02/2022,11/02/2025,90000,50000
+ly thanh hoa,bp001,p0001,quan ly,20/02/2019,20/02/2026,100000,0
+le thi hanh,bp001,p0001,nhan vien,14/12/2020,14/12/2025,50000,20000
+vu anh tuan,bp002,p0002,nhan vien,13/10/2020,13/10/2025,70000,50000
+le thien luu,bp003,p0003,nhan vien,05/02/2020,05/02/2025,0,80000
+vu nguyen anh,bp002,p0002,nhan vien,14/12/2020,14/12/2025,50000,0
+ly nguyen phuong,bp003,p0003,quan ly,02/11/2021,02/11/2026,0,50000
+dinh ba tien,bp002,p0002,quan ly,09/12/2020,09/12/2026,0,50000

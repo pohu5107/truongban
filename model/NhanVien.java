@@ -5,6 +5,7 @@ import java.util.Scanner;
 public class NhanVien extends ConNguoi {
     Scanner sc = new Scanner(System.in);
     private String MaNV;
+    private String MaBoPhan;
     private String MaPhong;
     private String ChucVu;
     private String LoaiHD;
@@ -17,10 +18,11 @@ public class NhanVien extends ConNguoi {
 
     }
 
-    public NhanVien(String MaNV, String HoTen, String MaPhong,
+    public NhanVien(String MaNV, String HoTen, String MaBoPhan, String MaPhong,
             String ChucVu, String LoaiHD, String NgayKiHD, String NgayHetHan, String Gmail) {
         this.MaNV = MaNV;
         this.HoTen = HoTen;
+        this.MaBoPhan = MaBoPhan;
         this.MaPhong = MaPhong;
         this.ChucVu = ChucVu;
         this.LoaiHD = LoaiHD;
@@ -30,10 +32,11 @@ public class NhanVien extends ConNguoi {
     }
 
     public NhanVien(String HoTen, String GioiTinh, String DiaChi, String QueQuan, String NgaySinh, String SoDT,
-            String DanToc, String TonGiao, String HocVan, String MaNV, String MaPhong,
+            String DanToc, String TonGiao, String HocVan, String MaNV, String MaBoPhan, String MaPhong,
             String ChucVu, String LoaiHD, String NgayKiHD, String NgayHetHan, String Gmail) {
         super(HoTen, GioiTinh, DiaChi, QueQuan, NgaySinh, SoDT, DanToc, TonGiao, HocVan);
         this.MaNV = MaNV;
+        this.MaBoPhan = MaBoPhan;
         this.MaPhong = MaPhong;
         this.ChucVu = ChucVu;
         this.LoaiHD = LoaiHD;
@@ -48,6 +51,14 @@ public class NhanVien extends ConNguoi {
 
     public void setMaNV(String MaNV) {
         this.MaNV = sc.nextLine();
+    }
+
+    public String getMaBoPhan(){
+        return MaBoPhan;
+    }
+
+    public void setMaBoPhan(String MaBoPhan){
+        this.MaBoPhan = MaBoPhan;
     }
 
     public String getMaPhong() {
@@ -102,6 +113,8 @@ public class NhanVien extends ConNguoi {
         super.input();
         System.out.print("Nhap Ma Nhan Vien: ");
         setMaNV(MaNV);
+        System.out.println("Nhap Ma Bo Phan: ");
+        setMaBoPhan(MaBoPhan);
         System.out.print("Nhap Ma Phong: ");
         setMaPhong(MaPhong);
         System.out.print("Nhap Chuc Vu: ");
@@ -117,8 +130,10 @@ public class NhanVien extends ConNguoi {
     }
 
     public String toString() {
-        return getMaNV() + "| " + getMaPhong() + "| " + getChucVu() + "| " +
+        return getMaNV() + "| " + getMaBoPhan() + "| " + getMaPhong() + "| " + getChucVu() + "| " +
                 getLoaiHD() + "| " + getNgayKy() + "| " + getNgayHetHan() + "| " + getGmail();
     }
+
+    
 
 }

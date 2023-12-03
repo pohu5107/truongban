@@ -48,4 +48,8 @@ public class ArrayClass implements methodArray {
         }
         return "[" + element + "]";
     }
+
+    public Object getArray() {
+        return null;
+    }
 }
